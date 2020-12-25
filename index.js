@@ -1,9 +1,4 @@
-require('dotenv').config();
-const config = {
-  token: process.env.TOKEN,
-  prefix: process.env.PREFIX,
-  owner: process.env.OWNER
-}
+
 const { executionAsyncResource } = require('async_hooks');
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
@@ -11,7 +6,7 @@ const ytdl = require('ytdl-core');
 const { YTSearcher } = require('ytsearcher');
  
 const searcher = new YTSearcher({
-    key: "AIzaSyBnW_ST9pD0GUdbj1XCISle8LVXGtTsftk",
+    key: "AIzaSyDoKfeYE1zlVMkWGuYyqoKm4c8icx4PN8E",
     revealed: true
 });
  
@@ -46,7 +41,7 @@ client.on("message", async(message) => {
     async function execute(message, serverQueue){
         let vc = message.member.voice.channel;
         if(!vc){
-            return message.channel.send("Please join a voice chat first");
+            return message.channel.send("Kudu join voice channel dulu!");
         }else{
             let result = await searcher.search(args.join(" "), { type: "video" })
             const songInfo = await ytdl.getInfo(result.first.url)
@@ -76,11 +71,11 @@ client.on("message", async(message) => {
                 }catch (err){
                     console.error(err);
                     queue.delete(message.guild.id);
-                    return message.channel.send(`Unable to join the voice chat ${err}`)
+                    return message.channel.send(`Tidak bisa join voice channel ${err}`)
                 }
             }else{
                 serverQueue.songs.push(song);
-                return message.channel.send(`The song has been added ${song.url}`);
+                return message.channel.send(`Lagu sudah ditambahkan ${song.url}`);
             }
         }
     }
@@ -97,21 +92,21 @@ client.on("message", async(message) => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
             })
-            serverQueue.txtChannel.send(`Now playing ${serverQueue.songs[0].url}`)
+            serverQueue.txtChannel.send(`Memainkan lagu ${serverQueue.songs[0].url}`)
     }
     function stop (message, serverQueue){
         if(!message.member.voice.channel)
-            return message.channel.send("You need to join the voice chat first!")
+            return message.channel.send("Kudu join voice channel dulu!")
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end();
     }
     function skip (message, serverQueue){
         if(!message.member.voice.channel)
-            return message.channel.send("You need to join the voice chat first");
+            return message.channel.send("Kudu join voice channel dulu!");
         if(!serverQueue)
-            return message.channel.send("There is nothing to skip!");
+            return message.channel.send("Tidak ada antrian lagu!");
         serverQueue.connection.dispatcher.end();
     }
 })
  
-client.login(config.token)
+client.login("NzkxNTY5NTc5MjM5Mjc2NTQ0.X-REng.yNj1rTP0s7hadoXogUT4HCDz2Cw")
