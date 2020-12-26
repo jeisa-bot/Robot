@@ -27,13 +27,13 @@ client.on("message", async(message) => {
     const command = args.shift().toLowerCase();
  
     switch(command){
-        case 'play':
+        case '!play':
             execute(message, serverQueue);
             break;
-        case 'stop':
+        case '!stop':
             stop(message, serverQueue);
             break;
-        case 'skip':
+        case '!skip':
             skip(message, serverQueue);
             break;
     }
